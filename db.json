@@ -25,12 +25,82 @@
     {
       "id": 2,
       "content": "Browser can execute only JavaScript",
-      "important": false
+      "important": true
     },
     {
       "id": 3,
       "content": "GET and POST are the most important methods of HTTP protocol",
       "important": true
+    },
+    {
+      "important": true,
+      "content": "testt",
+      "id": 4
+    },
+    {
+      "important": false,
+      "content": "test again",
+      "id": 5
+    },
+    {
+      "important": false,
+      "content": "now it is stored",
+      "id": 6
+    },
+    {
+      "content": "testing",
+      "important": true,
+      "id": 7
+    },
+    {
+      "content": "now testing again",
+      "important": false,
+      "id": 8
+    },
+    {
+      "content": "againnn",
+      "important": false,
+      "id": 9
+    },
+    {
+      "content": "testzz",
+      "important": false,
+      "id": 10
+    },
+    {
+      "content": "testtt",
+      "important": false,
+      "id": 11
+    },
+    {
+      "content": "testt",
+      "important": false,
+      "id": 12
+    },
+    {
+      "content": "test lagi lagi",
+      "important": false,
+      "id": 13
+    },
+    {
+      "content": "coba lagi",
+      "important": true,
+      "id": 14
+    },
+    {
+      "content": "testing2222",
+      "important": false,
+      "id": 15
+    },
+    {
+      "content": "adadada",
+      "important": true,
+      "id": 16
+    },
+    {
+      "content": "testingdlulagii",
+      "important": true,
+      "id": 17
     }
   ]
 }
