@@ -1,36 +1,39 @@
 import Note from './components/Note'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import noteService from './services/noteService'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNotes] = useState('add a new note..')
   const [showAll, setShowAll] = useState(true)
 
-  const hook = () => {
+  useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3002/notes')
-      .then(response => {
-        console.log('promise fulfilled')
-        setNotes(response.data)
+    noteService 
+      .getAll()
+      .then(initialNotes => {
+        console.log('Fetched notes:', initialNotes)
+        setNotes(initialNotes)
       })
-  }
-  
-  useEffect(hook, [])
+  }, [])
+  console.log('INSPECT NOTES', notes)
   console.log('render', notes.length, 'notes')
+  // console.log('render', notes.length, 'notes')
 
   const addNote = (event) => {
     event.preventDefault()
 
     const noteObject = {
-      important: Math.random() < 0.5,
       content: newNote,
-      id: notes.length + 1,
+      important: Math.random() < 0.5,
     }
 
-    setNotes(notes.concat(noteObject))
-    setNewNotes('')
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+        setNewNotes('')
+      })
   }
 
   const handleNoteChange = (event) => {
@@ -39,14 +42,33 @@ const App = () => {
   }
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
+  console.log('Notes to show:', notesToShow)
+
+
+  const toggleImportanceOf = (id) => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+        .then(returnedNote => { 
+          setNotes(notes.map(note => note.id === id ? returnedNote : note)) 
+        })
+        .catch(error=> {
+          alert(`the note '${note.content}' was already deleted from server`)
+          setNotes(notes.filter(n => n.id === id ))
+        })
+
+    console.log(`importance of ${id} needs to be toggled`)
+  }
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes</h1> 
       <button onClick={() => setShowAll(!showAll)}>Show {showAll ? 'important' : 'all' } </button>
       <ul>
-        {notesToShow.map(note => 
-          <Note key={note.id} note={note} />
+        {Array.isArray(notesToShow) && notesToShow.map(note => 
+          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
         )}
       </ul>
       <form onSubmit={addNote}>
