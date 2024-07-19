@@ -18,9 +18,6 @@ const App = () => {
         setNotes(initialNotes)
       })
   }, [])
-  console.log('INSPECT NOTES', notes)
-  console.log('render', notes.length, 'notes')
-  // console.log('render', notes.length, 'notes')
 
   const addNote = (event) => {
     event.preventDefault()
@@ -39,7 +36,6 @@ const App = () => {
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
     setNewNotes(event.target.value)    
   }
 
