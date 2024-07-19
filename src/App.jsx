@@ -122,7 +122,13 @@ const App = () => {
       <h1>Notes</h1>
       <Notification message={notifications?.message} type={notifications?.type}/> 
 
-      {user === null ? loginForm() : noteForm()}
+      {user === null ?
+      loginForm() :
+      <div>
+        <p>{user.name} logged-in</p>
+        {noteForm()}
+      </div>
+    }
 
       <button onClick={() => setShowAll(!showAll)}>
         Show {showAll ? 'important' : 'all' } 
