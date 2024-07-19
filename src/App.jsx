@@ -1,13 +1,17 @@
 import Note from './components/Note'
 import { useState, useEffect } from 'react'
 import noteService from './services/noteService'
+import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNotes] = useState('add a new note..')
   const [showAll, setShowAll] = useState(true)
   const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [password, setPassword] = useState('')
+  const [notifications, setNotifications] = useState(null)
+  const [user, setUser] = useState(null) 
 
   useEffect(() => {
     console.log('effect')
@@ -39,14 +43,28 @@ const App = () => {
     setNewNotes(event.target.value)    
   }
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
+    
+    try {
+      const user = await loginService.login({
+        username, password,
+      })
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setNotifications('Wrong credentials')
+      setTimeout(() => {
+        setNotifications(null)
+      }, 5000)
+    }
+    setNotifications(`logging in with ${username}`)
     console.log('logging in with', username, password)
   }
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
   console.log('Notes to show:', notesToShow)
-
 
   const toggleImportanceOf = (id) => {
     const note = notes.find(n => n.id === id)
@@ -67,7 +85,8 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1> 
+      <h1>Notes</h1>
+      <Notification message={notifications?.message} type={notifications?.type}/> 
 
       <form onSubmit={handleLogin}>
         <div>
