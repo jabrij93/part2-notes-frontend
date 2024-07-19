@@ -110,6 +110,23 @@ const App = () => {
     </form>  
   )
 
+  const handleLogOut = async (event) => {
+  
+    try {
+      window.localStorage.removeItem(
+        'loggedNoteappUser'
+      )
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setNotifications('User logged out')
+      setTimeout(() => {
+        setNotifications(null)
+      }, 5000)
+    }
+    console.log(`${username} logged out`)
+  }
+
   const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
   console.log('Notes to show:', notesToShow)
 
@@ -138,8 +155,7 @@ const App = () => {
       {user === null ?
       loginForm() :
       <div>
-        <p>{user.name} logged-in</p>
-        {noteForm()}
+        <p>{user.name} logged-in</p> <button onClick={handleLogOut}>Log Out</button>
       </div>
     }
 
