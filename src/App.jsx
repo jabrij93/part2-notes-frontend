@@ -116,6 +116,7 @@ const App = () => {
       window.localStorage.removeItem(
         'loggedNoteappUser'
       )
+      setUser(null)
       setUsername('')
       setPassword('')
     } catch (exception) {
