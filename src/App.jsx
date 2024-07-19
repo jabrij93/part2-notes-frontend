@@ -63,6 +63,40 @@ const App = () => {
     console.log('logging in with', username, password)
   }
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        username
+          <input
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+          <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>      
+  )
+
+  const noteForm = () => (
+    <form onSubmit={addNote}>
+      <input
+        value={newNote}
+        onChange={handleNoteChange}
+      />
+      <button type="submit">save</button>
+    </form>  
+  )
+
   const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
   console.log('Notes to show:', notesToShow)
 
@@ -88,32 +122,18 @@ const App = () => {
       <h1>Notes</h1>
       <Notification message={notifications?.message} type={notifications?.type}/> 
 
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      {user === null ? loginForm() : noteForm()}
 
-      <button onClick={() => setShowAll(!showAll)}>Show {showAll ? 'important' : 'all' } </button>
+      <button onClick={() => setShowAll(!showAll)}>
+        Show {showAll ? 'important' : 'all' } 
+      </button>
       <ul>
         {Array.isArray(notesToShow) && notesToShow.map(note => 
-          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
+          <Note 
+            key={note.id} 
+            note={note} 
+            toggleImportance={() => toggleImportanceOf(note.id)} 
+          />
         )}
       </ul>
       <form onSubmit={addNote}>
