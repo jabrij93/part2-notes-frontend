@@ -108,11 +108,7 @@ const App = () => {
       <Notification message={notifications?.message} type={notifications?.type} />
       {user === null ? (
         <div>
-          <div style={{ display: loginVisible ? 'none' : '' }}>
-            <button onClick={() => setLoginVisible(true)}>log in</button>
-          </div>
-          <div style={{ display: loginVisible ? '' : 'none' }}>
-          <Togglable buttonLabel='Login'> 
+          <Togglable buttonLabel='Login' style='inline-style'> 
               <LoginForm
                 username={username}
                 password={password}
@@ -120,15 +116,13 @@ const App = () => {
                 handlePasswordChange={({ target }) => setPassword(target.value)}
                 handleSubmit={handleLogin}
               />
-              {/* <button onClick={() => setLoginVisible(false)}>cancel</button> */}
             </Togglable>
-          </div>
         </div>
       ) : (
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>logout</button>
-          <Toggleable buttonLabel='test' />
+          <Togglable buttonLabel='test' />
           <form onSubmit={addNote}>
             <input value={newNote} onChange={handleNoteChange} />
             <button type="submit">save</button>
