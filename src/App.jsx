@@ -4,6 +4,9 @@ import noteService from './services/noteService';
 import loginService from './services/login';
 import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
+import NoteForm from './components/NoteForm';
+import Togglable from './components/Togglable';
+
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -109,20 +112,23 @@ const App = () => {
             <button onClick={() => setLoginVisible(true)}>log in</button>
           </div>
           <div style={{ display: loginVisible ? '' : 'none' }}>
-            <LoginForm
-              username={username}
-              password={password}
-              handleUsernameChange={({ target }) => setUsername(target.value)}
-              handlePasswordChange={({ target }) => setPassword(target.value)}
-              handleSubmit={handleLogin}
-            />
-            <button onClick={() => setLoginVisible(false)}>cancel</button>
+          <Togglable buttonLabel='Login'> 
+              <LoginForm
+                username={username}
+                password={password}
+                handleUsernameChange={({ target }) => setUsername(target.value)}
+                handlePasswordChange={({ target }) => setPassword(target.value)}
+                handleSubmit={handleLogin}
+              />
+              {/* <button onClick={() => setLoginVisible(false)}>cancel</button> */}
+            </Togglable>
           </div>
         </div>
       ) : (
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>logout</button>
+          <Toggleable buttonLabel='test' />
           <form onSubmit={addNote}>
             <input value={newNote} onChange={handleNoteChange} />
             <button type="submit">save</button>
