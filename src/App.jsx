@@ -10,13 +10,11 @@ import Togglable from './components/Togglable';
 
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('add a new note..');
   const [showAll, setShowAll] = useState(true);
   const [username, setUsername] = useState(''); 
   const [password, setPassword] = useState('');
   const [notifications, setNotifications] = useState(null);
   const [user, setUser] = useState(null);
-  const [loginVisible, setLoginVisible] = useState(false);
 
   useEffect(() => {
     noteService
@@ -35,23 +33,12 @@ const App = () => {
     }
   }, []);
 
-  const addNote = (event) => {
-    event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-    };
-
+  const addNote = (noteObject) => {
     noteService
       .create(noteObject)
       .then(returnedNote => {
         setNotes(notes.concat(returnedNote));
-        setNewNote('');
     });
-  };
-
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value);
   };
 
   const handleLogin = async (event) => {
@@ -108,7 +95,7 @@ const App = () => {
       <Notification message={notifications?.message} type={notifications?.type} />
       {user === null ? (
         <div>
-          <Togglable buttonLabel='Login' style='inline-style'> 
+          <Togglable buttonLabel='login'> 
               <LoginForm
                 username={username}
                 password={password}
@@ -123,12 +110,9 @@ const App = () => {
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>logout</button>
           <Togglable buttonLabel='Add Note' >
-            <NoteForm 
-              onSubmit={addNote} 
-              value={newNote} 
-              handleChange={handleNoteChange} 
-            />
+            <NoteForm createNote={addNote}/>
           </Togglable>
+        
         </div>
       )}
       <button onClick={() => setShowAll(!showAll)}>
