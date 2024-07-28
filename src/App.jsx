@@ -122,11 +122,13 @@ const App = () => {
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>logout</button>
-          <Togglable buttonLabel='test' />
-          <form onSubmit={addNote}>
-            <input value={newNote} onChange={handleNoteChange} />
-            <button type="submit">save</button>
-          </form>
+          <Togglable buttonLabel='Add Note' >
+            <NoteForm 
+              onSubmit={addNote} 
+              value={newNote} 
+              handleChange={handleNoteChange} 
+            />
+          </Togglable>
         </div>
       )}
       <button onClick={() => setShowAll(!showAll)}>
