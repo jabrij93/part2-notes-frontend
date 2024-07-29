@@ -41,20 +41,13 @@ const App = () => {
     });
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    
+  const handleLogin = async (userCredentials) => {
     try {
-      const user = await loginService.login({
-        username, 
-        password,
-      });
+      const user = await loginService.login( userCredentials );
       window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user));
       noteService.setToken(user.token);
         setUser(user);
-        setUsername('');
-        setPassword('');
-        setNotifications({ message: `Logging in as ${username}`, type: 'success' });
+        setNotifications({ message: `Logging in as ${user.name}`, type: 'success' });
     } catch (exception) {
         setNotifications({ message: 'Wrong credentials', type: 'error' });
     }
@@ -97,11 +90,7 @@ const App = () => {
         <div>
           <Togglable buttonLabel='login'> 
               <LoginForm
-                username={username}
-                password={password}
-                handleUsernameChange={({ target }) => setUsername(target.value)}
-                handlePasswordChange={({ target }) => setPassword(target.value)}
-                handleSubmit={handleLogin}
+                userLogin={handleLogin}
               />
             </Togglable>
         </div>
