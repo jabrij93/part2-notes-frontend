@@ -8,6 +8,7 @@ import NoteForm from './components/NoteForm';
 import Togglable from './components/Togglable';
 
 
+
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
@@ -54,7 +55,6 @@ const App = () => {
     } catch (exception) {
         setNotifications({ message: 'Wrong credentials', type: 'error' });
     }
-
     setTimeout(() => {
       setNotifications(null);
     }, 5000);
@@ -104,7 +104,6 @@ const App = () => {
           <Togglable buttonLabel='Add Note' ref={noteFormRef} >
             <NoteForm createNote={addNote}/>
           </Togglable>
-        
         </div>
       )}
       <button onClick={() => setShowAll(!showAll)}>
