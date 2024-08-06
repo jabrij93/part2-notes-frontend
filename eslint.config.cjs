@@ -21,12 +21,20 @@ module.exports = [
     languageOptions: {
       sourceType: "module",
       globals: {AudioWorkletGlobalScope: 'readonly', // Ensure no spaces here
-        // Add other specific globals if needed
+        "vitest-globals/env": true, // Add other specific globals if needed
       },
+     
     },
     plugins: {
       '@stylistic/js': stylisticJsPlugin,
     },
+    extends: [
+      'eslint:recommended',
+      'plugin:react/recommended',
+      'plugin:react/jsx-runtime',
+      'plugin:react-hooks/recommended',
+      'plugin:vitest-globals/recommended', // Add this line to extend Vitest's recommended rules
+    ],
     rules: {
       ...recommendedRules,
       '@stylistic/js/indent': ['error', 2],
