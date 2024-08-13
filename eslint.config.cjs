@@ -1,6 +1,6 @@
 // eslint.config.cjs
-const globals = require('globals');
-const stylisticJsPlugin = require('@stylistic/eslint-plugin-js');
+import globals from 'globals';
+import stylisticJsPlugin from '@stylistic/eslint-plugin-js';
 
 // Manually specify recommended rules
 const recommendedRules = {
