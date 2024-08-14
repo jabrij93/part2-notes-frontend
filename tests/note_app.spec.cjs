@@ -13,5 +13,10 @@ describe('Note app', () => {
         await page.goto('http://localhost:5173')
     
         await page.getByRole('button', { name: 'login' }).click()
+        await page.getByRole('textbox').first().fill('mluukkai')
+        await page.getByRole('textbox').last().fill('salainen')
+        await page.getByRole('button', { name: 'login' }).click()
+  
+        await expect(page.getByText('mluukkai logged in')).toBeVisible()
     })
 })
