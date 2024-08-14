@@ -118,6 +118,9 @@ const App = () => {
           />
         ))}
       </ul>
+
+      <p style={{ color: 'green', fontStyle: 'italic', fontSize: '25px'}}>Note app, Department of Computer Science, University of Helsinki 2024</p>
+
     </div>
   );
 };
