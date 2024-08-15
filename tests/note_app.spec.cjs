@@ -53,6 +53,13 @@ describe('Note app', () => {
         await page.getByTestId('password').fill('wrong')
         await page.getByRole('button', { name: 'login' }).click()
     
-        await expect(page.getByText('wrong credentials')).toBeVisible()
+        const errorMessage = page.getByText('wrong credentials');
+
+        // Ensure the error message is visible first
+        await expect(errorMessage).toBeVisible();
+
+        // Check that the element has the correct CSS styles
+        await expect(errorMessage).toHaveCSS('border-style', 'solid');
+        await expect(errorMessage).toHaveCSS('color', 'rgb(255, 0, 0)'); // 'red' in RGB format
       })  
 })
