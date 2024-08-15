@@ -45,5 +45,14 @@ describe('Note app', () => {
           await page.getByRole('button', { name: 'save' }).click()
           await expect(page.getByText('a note created by playwright3')).toBeVisible()
         })
-      }) 
+      })
+      
+    test('login fails with wrong password', async ({ page }) => { 
+        await page.getByRole('button', { name: 'login' }).click()
+        await page.getByTestId('username').fill('mluukkai')
+        await page.getByTestId('password').fill('wrong')
+        await page.getByRole('button', { name: 'login' }).click()
+    
+        await expect(page.getByText('wrong credentials')).toBeVisible()
+      })  
 })
