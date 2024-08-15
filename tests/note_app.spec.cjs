@@ -28,7 +28,7 @@ describe('Note app', () => {
         await page.getByTestId('password').fill('salainen')
         await page.getByRole('button', { name: 'login' }).click()
   
-        await expect(page.getByText('mluukkai logged in')).toBeVisible()
+        await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
     })
 
     describe('when logged in', () => {
