@@ -1,5 +1,5 @@
 const { test, describe, expect, beforeEach, beforeAll } = require('@playwright/test')
-const { loginWith } = require('./helper.cjs')
+const { loginWith, createNote } = require('./helper.cjs')
 
 describe('Note app', () => {
     beforeEach(async ({ page, request }) => {
@@ -23,24 +23,33 @@ describe('Note app', () => {
         await expect(page.getByText('Note app, Department of Computer Science, University of Helsinki 2024')).toBeVisible()
     })
 
-    test.only('user can log in', async ({ page }) => {
+    test('user can log in', async ({ page }) => {
         await loginWith(page, 'mluukkai', 'salainen')
       
         await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
     })
 
-    describe('when logged in', () => {
+    describe.only('when logged in', () => {
         beforeEach(async ({ page }) => {
           await loginWith(page, 'mluukkai', 'salainen')
         })
     
         test('a new note can be created', async ({ page }) => {
-          await page.getByRole('button', { name: 'add note' }).click()
-          await page.getByRole('textbox').fill('a note created by playwright3')
-          await page.getByRole('button', { name: 'save' }).click()
-          await expect(page.getByText('a note created by playwright3')).toBeVisible()
+            await createNote(page, 'a note created by playwright')
+            await expect(page.getByText('a note created by playwright')).toBeVisible()
+          })
         })
-      })
+
+        describe('and a note exists', () => {
+          beforeEach(async ({ page }) => {
+            await createNote(page, 'another note by playwright')
+          })
+
+          test('it can be made important', async ({ page }) => {
+            await page.getByRole('button', { name: 'make not important' }).click()
+            await expect(page.getByText('make important')).toBeVisible()
+          })
+        })
       
     test('login fails with wrong password', async ({ page }) => { 
         await page.getByRole('button', { name: 'login' }).click()
