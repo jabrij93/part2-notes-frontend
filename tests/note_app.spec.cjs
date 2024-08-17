@@ -1,4 +1,5 @@
-const { test, describe, expect, beforeEach } = require('@playwright/test')
+const { test, describe, expect, beforeEach, beforeAll } = require('@playwright/test')
+const { loginWith } = require('./helper.cjs')
 
 describe('Note app', () => {
     beforeEach(async ({ page, request }) => {
@@ -22,21 +23,15 @@ describe('Note app', () => {
         await expect(page.getByText('Note app, Department of Computer Science, University of Helsinki 2024')).toBeVisible()
     })
 
-    test('user can log in', async ({ page }) => {
-        await page.getByRole('button', { name: 'login' }).click()
-        await page.getByTestId('username').fill('mluukkai')
-        await page.getByTestId('password').fill('salainen')
-        await page.getByRole('button', { name: 'login' }).click()
-  
+    test.only('user can log in', async ({ page }) => {
+        await loginWith(page, 'mluukkai', 'salainen')
+      
         await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
     })
 
     describe('when logged in', () => {
         beforeEach(async ({ page }) => {
-          await page.getByRole('button', { name: 'login' }).click()
-          await page.getByTestId('username').fill('mluukkai')
-          await page.getByTestId('password').fill('salainen')
-          await page.getByRole('button', { name: 'login' }).click()
+          await loginWith(page, 'mluukkai', 'salainen')
         })
     
         test('a new note can be created', async ({ page }) => {
@@ -61,5 +56,7 @@ describe('Note app', () => {
         // Check that the element has the correct CSS styles
         await expect(errorMessage).toHaveCSS('border-style', 'solid');
         await expect(errorMessage).toHaveCSS('color', 'rgb(255, 0, 0)'); // 'red' in RGB format
+
+        await expect(page.getByText('Matti Luukkainen logged in')).not.toBeVisible()
       })  
 })
