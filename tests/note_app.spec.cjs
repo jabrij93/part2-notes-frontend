@@ -57,11 +57,11 @@ describe('Note app', () => {
           })
       
           test('one of those can be made non important', async ({ page }) => {
-            const otherNoteElement = await page.getByText('first note')
-      
-            await otherNoteElement
-              .getByRole('button', { name: 'make not important' }).click()
-            await expect(otherNoteElement.getByText('make important')).toBeVisible()
+            await page.getByText('first note')
+            .getByRole('button', { name: 'make not important' }).click()
+
+            await expect(page.getByText('first note').getByText('make important'))
+              .toBeVisible()
           })
         })
     })
