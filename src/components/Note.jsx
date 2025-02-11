@@ -4,7 +4,12 @@ const Note = ({ note, toggleImportance }) => {
   return (
     <li className='note'>
       <span> {note.content} </span>
-      <button onClick={toggleImportance}> {label} </button>
+      <button onClick={(event) => {
+        event.preventDefault()
+        toggleImportance()
+      }}> 
+        {label} 
+      </button>
     </li>
   )
 }

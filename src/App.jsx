@@ -7,8 +7,6 @@ import LoginForm from './components/LoginForm';
 import NoteForm from './components/NoteForm';
 import Togglable from './components/Togglable';
 
-
-
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
