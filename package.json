@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "server": "json-server -p3001 --watch db.json",
+    "server": "json-server -p3002 --watch db.json",
+    "test2": "vitest run",
     "test": "playwright test",
     "test:report": "playwright show-report"
   },
