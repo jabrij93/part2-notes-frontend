@@ -32,6 +32,10 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log('Updated Notes State:', notes)
+  }, [notes])
+
   const noteFormRef = useRef()
 
   const addNote = (noteObject) => {
